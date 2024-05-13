@@ -1,0 +1,42 @@
+class Solution {
+public:
+    int matrixScore(vector<vector<int>>& grid) {
+        int row = grid.size();
+        int clm = grid[0].size();
+
+        //flip in first column and rows
+        for(int i = 0; i < row; i++){
+            if(grid[i][0]==0){
+                for(int j = 0; j < clm; j++){
+                    grid[i][j] = 1 - grid[i][j]; // 1 - 0 = 1 and 1 - 1 = 0
+                }
+            }
+        }
+
+        // flip in clumns
+        for(int j = 1; j < clm; j++){
+            int zeroCount = 0;
+            for(int i = 0; i < row; i++){
+                if(grid[i][j]==0) zeroCount++;
+            }
+
+            int oneCount = row - zeroCount;
+
+            if(zeroCount > oneCount){
+                for(int i = 0; i < row; i++){
+                    grid[i][j] = 1 - grid[i][j];
+                }
+            }
+        }
+
+        int score = 0;
+
+        for(int i = 0; i < row; i++){
+            for(int j = 0; j < clm; j++){
+                int val = grid[i][j] * pow(2, clm - j - 1);
+                score += val;
+            }
+        }
+        return score;
+    }
+};
