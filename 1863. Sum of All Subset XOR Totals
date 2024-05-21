@@ -1,0 +1,31 @@
+class Solution {
+public:
+    void helper(vector<int>& nums, int i, vector<int>& currSubset,vector<vector<int>>& subsets) {
+        if (i == nums.size()) {
+            subsets.push_back(currSubset);
+            return;
+        }
+
+        currSubset.push_back(nums[i]);
+        helper(nums, i + 1, currSubset, subsets);
+        currSubset.pop_back();
+        helper(nums, i + 1, currSubset, subsets);
+    }
+
+    int subsetXORSum(vector<int>& nums) {
+        vector<vector<int>> subsets;
+        vector<int> currSubset;
+        helper(nums, 0, currSubset, subsets);
+
+        int ans = 0;
+        for (auto& currSubset : subsets) {
+            int xor = 0;
+            for (int num : currSubset) {
+                xor ^= num;
+            }
+            ans += xor;
+        }
+        return ans;
+    }
+    
+};
