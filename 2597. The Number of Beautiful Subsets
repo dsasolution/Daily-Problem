@@ -1,0 +1,31 @@
+class Solution {
+public:
+    int ans;
+    unordered_map<int, int> mp;
+    void helper(int ind, int n, vector<int>&temp, vector<int> &nums, int k){
+        if(ind==n){
+            ans++;
+            return;
+        }
+
+        if(mp[nums[ind]-k]==0){
+            mp[nums[ind]]++;
+            helper(ind+1, n, temp, nums, k);
+            mp[nums[ind]]--;
+        }
+        helper(ind+1, n, temp, nums, k);
+    }
+
+    int beautifulSubsets(vector<int>& nums, int k) {
+        sort(begin(nums), end(nums));
+        ans = 0;
+        vector<int> temp;
+        int n  = nums.size();
+        for(int i = 0; i < n; i++){
+            mp[nums[i]]++;
+            helper(i+1, n, temp, nums, k);
+            mp[nums[i]]--;
+        }
+        return ans;
+    }
+};
