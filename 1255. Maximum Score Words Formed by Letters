@@ -1,0 +1,44 @@
+class Solution {
+public:
+    int n, ans;
+
+    void helper(int ind, vector<int> &score, int currScore, vector<string> &words, vector<int> &fr){
+        ans = max(ans, currScore);
+        if(ind >= n) return;
+
+        vector<int> tempFr = fr;
+        int j = 0, tempScore = 0;
+
+        while(j < words[ind].length()){
+            char ch = words[ind][j];
+
+            tempFr[ch - 'a']--;
+            tempScore += score[ch - 'a'];
+
+            if(tempFr[ch - 'a'] < 0){
+                break;
+            }
+            j++;
+        }
+
+        if(j == words[ind].length()){
+            helper(ind+1, score, currScore + tempScore, words, tempFr);
+        }
+
+        helper(ind+1, score, currScore, words, fr);
+    }
+
+    int maxScoreWords(vector<string>& words, vector<char>& letters, vector<int>& score) {
+        n = words.size();
+        ans = 0;
+        vector<int> fr(26, 0);
+
+        for(char &letter : letters){
+            fr[letter - 'a']++;
+        }
+
+        helper(0, score, 0, words, fr);
+
+        return ans;
+    }
+};
