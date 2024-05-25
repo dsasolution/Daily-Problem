@@ -1,0 +1,34 @@
+class Solution {
+public:
+    void helper(int i, vector<string> &ans, string &s, string sent, unordered_map<string, int> &mp){
+        if(i >= s.size()){
+            ans.push_back(sent);
+            return;
+        }
+
+        for(int j = i; j < s.size(); j++){
+            string tempWord = s.substr(i, j - i + 1);
+
+            if(mp.find(tempWord)!=mp.end()){
+                string tempSent = sent;
+                if(sent.size()!=0){
+                    sent += " ";
+                }
+                sent += tempWord;
+                helper(j + 1, ans, s, sent, mp);
+                sent = tempSent;
+            }
+        }
+    }
+    vector<string> wordBreak(string s, vector<string>& wordDict) {
+        vector<string> ans;
+        unordered_map<string, int> mp;
+        string sentence = "";
+        for(string &word : wordDict){
+            mp[word]++;
+        }
+        helper(0, ans, s, sentence, mp);
+
+        return ans;
+    }
+};
