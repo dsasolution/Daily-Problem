@@ -1,0 +1,21 @@
+class Solution {
+public:
+    int mod = 1e9+7;
+    int helper(int n, int absent, int late, vector<vector<vector<int>>> &dp){
+        if(absent >= 2 || late >= 3) return 0;
+        if(n==0) return 1;
+        if(dp[n][absent][late]!=-1) return dp[n][absent][late];
+
+        int a = helper(n-1, absent + 1, 0, dp)%mod;//Absent
+        int l = helper(n-1, absent, late + 1, dp)%mod;//Late
+        int p = helper(n-1, absent, 0, dp)%mod;//Present
+
+        return dp[n][absent][late] = ((a + l)%mod + p)%mod;
+    }
+
+    int checkRecord(int n) {
+        vector<vector<vector<int>>> dp(n+1, vector<vector<int>>(2, vector<int>(3, -1)));
+        return helper(n, 0, 0, dp);
+    }
+};
+//Memoization 
