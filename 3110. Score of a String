@@ -1,0 +1,28 @@
+class Solution {
+public:
+    int scoreOfString(string s) {
+        int score = 0;
+        for(int i = 1; i < s.size(); i++){
+            score += abs(s[i] - s[i-1]);
+        }
+        return score;
+    }
+};
+
+/*
+ASCII
+a = 97
+b = 98 
+c = 99
+.
+.
+.
+.
+.
+x = 120
+y = 121
+z = 122
+
+hello 
+score = abs(h - e) + abs(e - h) + abs(l - l) + abs(l - o)
+*/
