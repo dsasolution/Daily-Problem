@@ -1,0 +1,33 @@
+class Solution {
+public:
+    void fillWithLetter(string &word, vector<int> &count){
+        for(char ch : word){
+            count[ch - 'a']++;
+        }
+    }
+    vector<string> commonChars(vector<string>& words) {
+        vector<string> ans;
+        vector<int> count(26, 0);
+
+        fillWithLetter(words[0], count);
+
+        for(int i = 1; i < words.size(); i++){
+            vector<int> tempCount(26, 0);
+            fillWithLetter(words[i], tempCount);
+            for(int j = 0; j < 26; j++){
+                if(count[j]!=tempCount[j]){
+                    count[j] = min(count[j], tempCount[j]);
+                }
+            }
+        }
+
+        for(int i = 0; i < 26; i++){
+            int length = count[i];
+            while(length!=0){
+                ans.push_back(string(1, i + 'a'));
+                length--;
+            }
+        }
+        return ans;
+    }
+};
