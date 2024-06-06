@@ -1,0 +1,26 @@
+class Solution {
+public:
+    bool isNStraightHand(vector<int>& hand, int groupSize) {
+        int n = hand.size();
+        if(n % groupSize != 0) return false;
+
+        unordered_map<int, int> mp;
+        for(int card : hand) mp[card]++;
+
+        vector<int> uniqKeys;
+        for(auto it : mp) uniqKeys.push_back(it.first);
+        sort(begin(uniqKeys), end(uniqKeys));
+
+        for(int key : uniqKeys){
+            if(mp[key] > 0){
+                int startCount = mp[key];
+
+                for(int i = key; i < key + groupSize; i++){
+                    if(mp[i] < startCount) return false;
+                    mp[i] -= startCount;
+                }
+            }
+        }
+        return true;
+    }
+};
