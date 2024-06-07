@@ -1,0 +1,23 @@
+class Solution {
+public:
+    string getRoot(string &root, unordered_map<string, int> &mp){
+        for(int i = 1; i < root.size(); i++){
+            string str = root.substr(0, i);
+            if(mp.find(str)!=mp.end()) return str;
+        }
+        return root;
+    }
+    string replaceWords(vector<string>& dictionary, string sentence) {
+        int n = sentence.size();
+        unordered_map<string, int> mp;
+        for(string d : dictionary) mp[d]++;
+        stringstream token(sentence);
+        string root, ans = "";
+
+        while(getline(token, root, ' ')){
+            ans += getRoot(root, mp) + " ";
+        }
+        ans.pop_back();
+        return ans;
+    }
+};
