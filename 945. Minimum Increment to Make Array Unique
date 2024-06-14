@@ -1,0 +1,15 @@
+class Solution {
+public:
+    int minIncrementForUnique(vector<int>& nums) {
+        sort(begin(nums), end(nums));//sort the Array
+
+        int trackNum = 0, moveCount = 0;
+
+        for(int i = 0; i < nums.size(); i++){
+            trackNum = max(trackNum, nums[i]);
+            moveCount += (trackNum - nums[i]);
+            trackNum++;
+        }
+        return moveCount;
+    }
+};
