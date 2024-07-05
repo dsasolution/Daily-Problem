@@ -1,0 +1,54 @@
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode() : val(0), next(nullptr) {}
+ *     ListNode(int x) : val(x), next(nullptr) {}
+ *     ListNode(int x, ListNode *next) : val(x), next(next) {}
+ * };
+ */
+class Solution {
+public:
+    vector<int> nodesBetweenCriticalPoints(ListNode* head) {
+        int i = 1, minDistance = INT_MAX;
+        vector<int> ans(2, -1);
+        int firstCriticalPosition = 0, prevCriticalPosition = 0;
+
+        ListNode* prev = head, *curr = head->next;
+
+        while(curr->next!=NULL){
+            if((curr->val < prev->val && curr->val < curr->next->val) || 
+                (curr->val > prev->val && curr->val > curr->next->val)){
+                    if(firstCriticalPosition == 0){
+                        firstCriticalPosition = i;
+                        prevCriticalPosition = i;
+                    }else{
+                        minDistance = min(minDistance, i - prevCriticalPosition);
+                        prevCriticalPosition = i;
+                    }
+                }
+                i++;
+                prev = curr;
+                curr = curr->next;
+        }
+        if(minDistance==INT_MAX) return ans;
+        ans[0] = minDistance;
+        ans[1] = prevCriticalPosition - firstCriticalPosition;
+        return ans;
+    }
+};
+
+/*
+[5,3,1,2,5,1,2]
+ 5>3>1<2<5>1<2
+ 0,1,2,3,4,5,6
+     1 is Critical Position 2
+     5 is Critical Position 4
+     1 is Critical Position 5
+
+     minDIstance = 5-4 = 1;
+     maxDistance = 5 - 2 = 3
+     answer = [1, 3]
+
+*/
