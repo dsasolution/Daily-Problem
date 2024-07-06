@@ -1,0 +1,24 @@
+class Solution {
+public:
+    int passThePillow(int n, int time) {
+        if(time <= n-1) return time + 1;
+
+        int q = time/(n-1); //quotient
+        int r = time%(n-1); // Remainder
+
+        if(q%2==1){ //Odd Conditon
+            return n - r;
+        }
+
+        //Even Condition
+        return r+1;
+    }
+};
+
+/*
+ n = 4, time = 5
+ 1 -> 2 -> 3 -> 4 -> 3 -> 2
+   1s   1s   1s   1s    1s
+   1ses 2sec 3sec 4sec  5ses
+    Answer will be 2nd index
+*/
