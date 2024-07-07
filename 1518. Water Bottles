@@ -1,0 +1,20 @@
+class Solution {
+public:
+    int numWaterBottles(int numBottles, int numExchange) {
+        int count = numBottles; // Count water bottles
+
+        while(numBottles >= numExchange){
+            int emptyBottles = numBottles/numExchange;
+            count += emptyBottles;
+            numBottles = emptyBottles + numBottles%numExchange;
+        }
+        return count;
+    }
+};
+
+/*
+You Drunk 9 Water Bottles
+You have 3 empty water bottles you can get ONE Water Bottle
+You have 9 Empty Water bottles you can get 9/3 Water Bottles
+Total Number of Empty Water Bottles = 9/3 + 9%3;
+*/
