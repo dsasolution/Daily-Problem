@@ -1,0 +1,52 @@
+class Solution {
+public:
+    double averageWaitingTime(vector<vector<int>>& customers) {
+        int n = customers.size();
+        double totalWaitingTime = 0;
+        int totalTime = customers[0][0];
+
+        for(vector<int> &time : customers){
+            int arrivalTime = time[0];
+            int timeTakeToPrepareFood = time[1];
+            
+            if(totalTime < arrivalTime){
+                totalTime = arrivalTime;
+            }
+            totalTime += timeTakeToPrepareFood;
+
+            if(totalTime <= arrivalTime){
+                totalWaitingTime += timeTakeToPrepareFood;
+            }else{
+                totalWaitingTime +=(totalTime - arrivalTime);
+            }
+        }
+        return (totalWaitingTime)/n;
+    }
+};
+
+/*
+customers = [[1,2],[2,5],[4,3]]
+at index = 0;
+  Arrival Time = 1;
+  time take to preoare food = 2
+  Total time = 1 + 2 = 3
+  Waiting Time = 3 - 1 = 2
+
+At index i = 1
+  AT = 2;
+  TTTPF = 5
+  TT = 3 + 5 = 8
+  WT = 8 - AT = 8 - 2 = 6;
+
+At index = 2
+   AT = 4;
+   TTTP = 3;
+   TT = 8 + AT = 8 + 3 = 11;
+   WT = 11 - 4 = 7
+
+   Total Waiting Time = 2 + 6 + 7 = 15
+   Average Waiting Time = 15/3 = 5
+
+   // In Some Case Arrival Time Greater then Total Time
+    tota Time = Arrival Time + Timem take to prepare food
+*/
