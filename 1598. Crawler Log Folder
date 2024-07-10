@@ -1,0 +1,28 @@
+class Solution {
+public:
+    int minOperations(vector<string>& logs) {
+        
+        int main = 0; //Initially in main folder
+
+        for(string &str : logs){
+
+            if("../" == str){ // Move Back to one Folder from child to parent
+                main--;
+                if(main < 0) main = 0;
+            }else if("./" == str){ //Folder Not Chnage
+                continue;
+            }else{
+                main++; //Add one Folder to parent folder
+            }
+        }
+        return main;
+    }
+};
+
+/*
+
+../ -> Back one folder
+./  -> Not Change
+folderName/ -> Move one folder from main to child folder
+
+*/
