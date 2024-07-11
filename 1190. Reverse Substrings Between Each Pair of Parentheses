@@ -1,0 +1,40 @@
+class Solution {
+public:
+    string reverseParentheses(string s) {
+        stack<char> st;
+        int i = 0, n = s.size();
+        string ans = "";
+
+        while(i < n){
+            if(s[i]==')'){
+                string temp = "";
+                while(st.top()!='('){
+                    temp += st.top();
+                    st.pop();
+                }
+                st.pop(); //-> remove open '('
+                
+                for(int j = 0; j < temp.size(); j++){
+                    st.push(temp[j]);
+                }
+            }else{
+                st.push(s[i]);
+            }
+            i++;
+        }
+
+        while(!st.empty()){
+            ans = st.top() + ans;
+            st.pop();
+        }
+        return ans;
+    }
+};
+
+/*
+Example
+ s = "(ed(et(oc))el)" -> reverse "oc"
+      (ed(et co)el)   -> reverse "etco"
+      (ed(octe)el)  -> reverse "edocteel"
+      leetcode
+*/
