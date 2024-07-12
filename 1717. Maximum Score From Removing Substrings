@@ -1,0 +1,65 @@
+class Solution {
+public:
+    int maximumGain(string s, int x, int y) {
+        stack<char> st;
+        int ans = 0;
+        if(x > y){
+            for(char &ch : s){
+                if(ch == 'b' && !st.empty() && st.top()=='a'){ //Remove 'ab'
+                    st.pop(); // 
+                    ans += x;
+                }else{
+                    st.push(ch);
+                }
+            }
+        }else{
+            for(char &ch : s){
+                if(ch=='a' && !st.empty() && st.top()=='b'){
+                    st.pop();
+                    ans += y;
+                }else{
+                    st.push(ch);
+                }
+            }
+        }
+
+        string remain = "";
+
+        while(!st.empty()){
+            remain.push_back(st.top());
+            st.pop();
+        }
+
+        reverse(begin(remain), end(remain));
+
+        for(char &ch : remain){
+            if(x > y){
+                if(ch == 'a' && !st.empty() && st.top()=='b'){
+                    ans += y;
+                    st.pop();
+                }else{
+                    st.push(ch);
+                }
+            }else{
+                if(ch=='b' && !st.empty() && st.top()=='a'){
+                    ans += x;
+                    st.pop();
+                }else{
+                    st.push(ch);
+                }
+            }
+        }
+        return ans;
+    }
+};
+
+/*
+s = "cdbcbbaaabab", x = 4, y = 5, ans = 0
+     cdbcbbaaa'ba'b -> remove 'ba' , ans += y , ans = 5;
+     cdbcbbaa'ab' -> remove -> ab  , ans += x , ans = 5 + 4 = 9
+     cdbcb'ba'a  -> remove -> ba  , ans += y , ans = 5 + 4 + 5 = 14'
+     cdbc'ba' -> remove - ba  ans += y , ans = 5 + 4 + 5 + 5 = 19
+     cdbc
+
+     answer = 19 
+*/
