@@ -1,0 +1,67 @@
+
+
+class Solution {
+public:
+    string countOfAtoms(string s) {
+        stack<pair<string, int>> st;
+        unordered_map<string, int> mp;
+        int i = 0;
+
+        while (i < s.size()) {
+            if (s[i] == '(') {
+                st.push({"#", 0});
+                i++;
+            } else if (s[i] == ')') {
+                i++;
+                string temp = "";
+                while (i < s.size() && isdigit(s[i])) {
+                    temp += s[i];
+                    i++;
+                }
+                int t = temp.empty() ? 1 : stoi(temp);
+                unordered_map<string, int> tempMap;
+                while (!st.empty() && st.top().first != "#") {
+                    auto it = st.top();
+                    st.pop();  
+                    tempMap[it.first] += it.second * t;
+                }
+                st.pop(); //poping the "#"
+                for (auto& it : tempMap) {
+                    st.push({it.first, it.second});
+                }
+            } else {
+                string a = "";
+                a += s[i];
+                i++;
+                while (i < s.size() && islower(s[i])) {
+                    a += s[i];
+                    i++;
+                }
+                string b = "";
+                while (i < s.size() && isdigit(s[i])) {
+                    b += s[i];
+                    i++;
+                }
+                int c = b.empty() ? 1 : stoi(b);
+                st.push({a, c});
+            }
+        }
+
+        while (!st.empty()) {
+            auto it = st.top();
+            st.pop();
+            mp[it.first] += it.second;
+        }
+
+        map<string, int> sortedMap(mp.begin(), mp.end());
+        string result;
+        for ( auto& it : sortedMap) {
+            result += it.first;
+            if (it.second > 1) {
+                result += to_string(it.second);
+            }
+        }
+
+        return result;
+    }
+};
