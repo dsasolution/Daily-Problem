@@ -1,0 +1,32 @@
+class Solution {
+public:
+    vector<string> sortPeople(vector<string>& names, vector<int>& heights) {
+        int n = names.size();
+
+        vector<pair<string, int>> v(n);
+
+        for(int i = 0; i < n; i++){
+            v[i] = {names[i], heights[i]};
+        }
+
+        auto alpha = [&](auto &p1, auto &p2){
+            return p1.second > p2.second;
+        };
+        sort(begin(v), end(v), alpha);
+
+        vector<string> ans;
+
+        for(int i = 0; i < n; i++){
+            ans.push_back(v[i].first);
+        }
+        return ans;
+
+    }
+};
+
+/*
+names   = ["Mary","John","Emma"], 
+heights = [ 180,    165,  170]
+
+Descending order : 180, 170, 165
+*/
