@@ -1,0 +1,20 @@
+class Solution {
+public:
+    vector<int> frequencySort(vector<int>& nums) {
+        unordered_map<int, int> fr;
+
+        for(int &num : nums){
+            fr[num]++;
+        }
+
+        sort(begin(nums), end(nums), [&](auto n1, auto n2){
+            if(fr[n1]!= fr[n2]){
+                return fr[n1] < fr[n2];
+            }else{
+                return n2 < n1; // sort in  decreasing order
+            }
+        });
+
+        return nums;
+    }
+};
