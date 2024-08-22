@@ -1,0 +1,28 @@
+class Solution {
+public:
+    int findComplement(int num) {
+        vector<int> bits;
+        int ans = 0;
+
+        while(num!=0){
+            int bit = num%2;
+            bits.push_back(bit);
+            num = num/2;
+        }
+
+        for(int i = bits.size()-1; i >= 0; i--){
+            ans += (!bits[i])*pow(2, i);
+        }
+        return ans;
+    }
+};
+
+/*
+
+Binary Rep of 5 = '101
+complement = revrse the bit  = '010' = 
+change in decimal = 0*2^0 + 1*2^1 + 0*2^2
+                  = 0 + 2 + 0
+                  = 2 is answer;
+
+*/
