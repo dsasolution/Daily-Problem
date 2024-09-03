@@ -1,0 +1,36 @@
+class Solution {
+public:
+    int helper(int num){
+        int sum = 0;
+
+        while(num!=0){
+            int digit = num % 10;
+            sum += digit;
+            num = num/10;
+        }
+        return sum;
+    }
+    int getLucky(string s, int k) {
+        int ans = 0;
+
+        for(int i = 0; i < s.size(); i++){
+            int ind = s[i] - 97 + 1; // step-1
+            ans += helper(ind);//Step-2
+        }
+
+        while((k-1)!=0){//step-3
+            ans = helper(ans);
+            k--;
+        }
+        return ans;
+
+
+    }
+};
+/*
+Step-1 : Convert the string letter with its position in alphabet
+    Like ; a-> 1, b -> 2 ........ z-> 26;
+Step-2 : Calculate position digit sum
+
+step-3 : fllow step-2 'k' Times
+*/
