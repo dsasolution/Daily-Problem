@@ -1,0 +1,45 @@
+class Solution {
+public:
+    vector<int> missingRolls(vector<int>& rolls, int mean, int n) {
+        int sum = 0;
+
+        for(int roll : rolls) sum += roll;//Step-1
+
+        int rSum = mean*(n + rolls.size()) - sum;//Step-2
+
+        int x = rSum/n, y = rSum%n; ///Step-3
+
+        if(x <= 0 || x > 6) return {}; //Step-4
+        if(x==6 && y > 0) return {};
+
+        vector<int> ans(n);
+
+        for(int i = 0; i < n; i++){ // Step-5
+            ans[i] = x;
+        }
+
+        for(int i = 0; i < y; i++) ans[i]++;
+        
+        return ans;
+    }
+};
+
+/*
+rolls = [3,2,4,3], mean = 4, n = 2
+
+Sep-1: Calculate the sum of all rolls 
+sum = 3 + 2 + 4 + 3 = 12;
+
+Step-2: Find the remaining sum using formula rSum = mean*(n + rolls.size())-sum
+ rSum = 4*(2+4)-12 = 12;
+
+Step-3 : x = rSum/n;
+         y = rSum%n;
+
+Step-4 : Validate the missing number b/w the 1 & 6;
+
+step-5 : Distribute the missing number 
+
+Step -6 ; return the answer;
+
+*/
