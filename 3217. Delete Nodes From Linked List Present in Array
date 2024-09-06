@@ -1,0 +1,47 @@
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode() : val(0), next(nullptr) {}
+ *     ListNode(int x) : val(x), next(nullptr) {}
+ *     ListNode(int x, ListNode *next) : val(x), next(next) {}
+ * };
+ */
+class Solution {
+public:
+    ListNode* modifiedList(vector<int>& nums, ListNode* head) {
+        unordered_map<int, int> mp; // Step-1
+
+        for(int num : nums) mp[num]++; // Step-2
+
+        while(head!=NULL && mp.find(head->val)!=mp.end()){// Step-3
+            ListNode* temp = head;
+            head = head->next;
+            delete(temp);
+        }
+
+        ListNode* node = head;
+
+        while(node!=NULL && node->next!=NULL){// Step-4
+            if(mp.find(node->next->val)!=mp.end()){
+                ListNode* temp = node->next;
+                node->next = node->next->next;
+                delete(temp);
+            }else{
+                node = node->next;
+            }
+        }
+        return head;// Step-5
+    }
+};
+
+/*
+Solution
+
+ Step - 1: Make an unordered Map
+ Step - 2: Iterate array and store in map
+ Step - 3: head delete first;
+ Step - 4: head not delete first
+ Step - 5: return head;
+*/
