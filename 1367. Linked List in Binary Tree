@@ -1,0 +1,30 @@
+
+class Solution {
+public:
+    bool checkPath(ListNode* head, TreeNode* root){ //step-3
+        if(head==NULL) return true; //step-4
+        if(root==NULL || head->val!=root->val) return false; //step-5
+        return checkPath(head->next, root->left) || checkPath(head->next, root->right); //step-6
+
+    }
+    bool isSubPath(ListNode* head, TreeNode* root) {
+        if(root==NULL)return false; //step-1
+
+        return checkPath(head, root) || isSubPath(head, root->left) || isSubPath(head, root->right); // step-2
+
+    }
+};
+/*
+Step-1: If tree is empty, no path can match
+Step-2: Check if the current node can start the matching
+path or search in tree
+Step-3: Create a checkPath function to check head matches
+in the tree
+Step-4: head is fully traversed , one maching path found
+Step-5: if root is NULL or does not match head
+Step-6: Call recusrion to check next head matches either
+left or right subtree.
+
+*/
+
+
