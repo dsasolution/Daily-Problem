@@ -1,0 +1,20 @@
+
+class Solution {
+public:
+    vector<int> xorQueries(vector<int>& arr, vector<vector<int>>& queries) {
+        int n = queries.size();
+        vector<int> ans(n);
+
+        int i = 0;
+        for(vector<int> q : queries){
+            int temp = arr[q[0]];
+
+            for(int j = q[0] + 1; j <= q[1]; j++){
+                temp = temp ^ arr[j];
+            }
+            ans[i] = temp;
+            i++;
+        }
+        return ans;
+    }
+};
