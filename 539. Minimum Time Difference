@@ -1,0 +1,24 @@
+class Solution {
+public:
+    int inMunites(string s){
+        int h = ((s[0] - '0')*10 + s[1])*60;
+        int m = (s[3] - '0')*10 + s[4];
+        return m + h;
+    }
+    int findMinDifference(vector<string>& timePoints) {
+        vector<int> minutes;
+        int minDiff = INT_MAX;
+        int n = timePoints.size();
+
+        for(string &p : timePoints){
+            minutes.push_back(inMunites(p));
+        }
+
+        sort(begin(minutes), end(minutes));
+
+        for(int i = 1; i < n; i++){
+            minDiff = min(minDiff, minutes[i] - minutes[i-1]);
+        }
+        return min(minDiff, abs(minutes[0] + 1440 - minutes[n - 1]));
+    }
+};
