@@ -1,0 +1,83 @@
+
+****************************************** Method - 1 *****************************************
+
+class Solution {
+public:
+    vector<string> tokenizing(string s){
+        vector<string> tokens;
+        string temp = "";
+
+        for(int i = 0; i < s.size(); i++){
+            if(s[i] == ' '){
+                tokens.push_back(temp);
+                temp = "";
+            }else{
+                temp = temp + s[i];
+            }
+        }
+        tokens.push_back(temp);
+        return tokens;
+    }
+
+    vector<string> uncommonFromSentences(string s1, string s2) {
+        vector<string> ans, tokens = tokenizing(s1);
+        unordered_map<string, int> mp;
+
+        for(string &token : tokens){
+            mp[token]++;
+        }
+
+        tokens =  tokenizing(s2);
+
+        for(string &token : tokens){
+            mp[token]++;
+        }
+
+        for(auto &it : mp){
+            if(it.second == 1){
+                ans.push_back(it.first);
+            }
+        }
+        return ans;
+
+    }
+};
+
+
+****************************************** Method - 2 *****************************************
+class Solution {
+public:
+    vector<string> tokenizing(string s){
+        vector<string> tokens;
+        stringstream check(s);
+        string token;
+
+        while(getline(check, token, ' ')){
+            tokens.push_back(token);
+        }
+        return tokens;
+    }
+
+    vector<string> uncommonFromSentences(string s1, string s2) {
+        vector<string> ans, tokens = tokenizing(s1);
+        unordered_map<string, int> mp;
+
+        for(string &token : tokens){
+            mp[token]++;
+        }
+
+        tokens =  tokenizing(s2);
+
+        for(string &token : tokens){
+            mp[token]++;
+        }
+
+        for(auto &it : mp){
+            if(it.second == 1){
+                ans.push_back(it.first);
+            }
+        }
+        return ans;
+
+    }
+};
